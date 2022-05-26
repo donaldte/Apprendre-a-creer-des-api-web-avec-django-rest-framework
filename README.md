@@ -3,7 +3,7 @@ Creation des API web avec django framework
 
 # Outiils<br>
 1 - Python3.9 <br>
-2 - django>=4.0,<4.1
+2 - django>=4.0,<4.1 <br>
 3 - djangorestframework<br>
 4 - requests<br>
 5 - pyyaml<br>
