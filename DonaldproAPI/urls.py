@@ -19,6 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
+    path('product/', include('product.urls')),
 ]
 
-endpoint = 'http://127.0.0.1:8081/api'
