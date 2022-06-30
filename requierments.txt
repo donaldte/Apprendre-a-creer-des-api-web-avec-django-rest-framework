@@ -1,0 +1,5 @@
+pyyaml
+requests
+djangorestframework
+django>=4.00,<4.10
+django-cors-headers
