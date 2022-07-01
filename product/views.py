@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import ProductSerializer
 from rest_framework import authentication, generics, mixins, permissions
+from .permissions import IsStaffPermission
 
 class DetailProductView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
@@ -17,8 +18,8 @@ class DetailProductView(generics.RetrieveAPIView):
 class ListCreateProductView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     def perform_create(self, serializer):
         name = serializer.validated_data.get('name')
         content = serializer.validated_data.get('content') or None
