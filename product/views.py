@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from .serializer import ProductSerializer
 from rest_framework import authentication, generics, mixins, permissions
 from .permissions import IsStaffPermission
+from .authentication import TokenAuthentication
 
 class DetailProductView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
@@ -18,7 +19,6 @@ class DetailProductView(generics.RetrieveAPIView):
 class ListCreateProductView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     def perform_create(self, serializer):
         name = serializer.validated_data.get('name')
@@ -30,6 +30,7 @@ class ListCreateProductView(generics.ListCreateAPIView):
 class UpdateProductView(generics.UpdateAPIView):  
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     lookup_field = 'pk'
     def perform_update(self, serializer):
         name = serializer.validated_data.get('name')
@@ -40,6 +41,7 @@ class UpdateProductView(generics.UpdateAPIView):
 
 class DeleteProductView(generics.DestroyAPIView):
     queryset = Product.objects.all()
+    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     serializer_class = ProductSerializer
     lookup_field = 'pk'
 
