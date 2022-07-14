@@ -1,25 +1,24 @@
 from django.shortcuts import get_object_or_404
-from yaml import serialize
 from .models import Product
-from django.http import JsonResponse
 
 from django.forms.models import model_to_dict
 
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import ProductSerializer
-from rest_framework import authentication, generics, mixins, permissions
-from .permissions import IsStaffPermission
-from .authentication import TokenAuthentication
+from rest_framework import  generics, mixins
+
+from api.mixins import StaffEditorPermissionsMixin
 
 class DetailProductView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class ListCreateProductView(generics.ListCreateAPIView):
+class ListCreateProductView(
+    StaffEditorPermissionsMixin, 
+    generics.ListCreateAPIView):
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     def perform_create(self, serializer):
         name = serializer.validated_data.get('name')
         content = serializer.validated_data.get('content') or None
@@ -27,10 +26,12 @@ class ListCreateProductView(generics.ListCreateAPIView):
             content = name
         serializer.save(content=content)
 
-class UpdateProductView(generics.UpdateAPIView):  
+class UpdateProductView(
+    StaffEditorPermissionsMixin, 
+    generics.UpdateAPIView):  
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     lookup_field = 'pk'
     def perform_update(self, serializer):
         name = serializer.validated_data.get('name')
@@ -39,9 +40,11 @@ class UpdateProductView(generics.UpdateAPIView):
             content = name
         serializer.save(content=content)     
 
-class DeleteProductView(generics.DestroyAPIView):
+class DeleteProductView(
+    StaffEditorPermissionsMixin, 
+    generics.DestroyAPIView):
+    
     queryset = Product.objects.all()
-    permission_classes = [permissions.IsAdminUser ,IsStaffPermission]
     serializer_class = ProductSerializer
     lookup_field = 'pk'
 

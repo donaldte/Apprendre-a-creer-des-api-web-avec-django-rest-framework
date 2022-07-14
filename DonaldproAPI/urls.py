@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('product/', include('product.urls')),
+    path('product/v2/', include('DonaldproAPI.routers'))
 ]
 
