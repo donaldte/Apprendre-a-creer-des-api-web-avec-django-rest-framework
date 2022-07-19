@@ -9,16 +9,14 @@ class ProductSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='product-detail', lookup_field='pk')
     email = serializers.EmailField(write_only=True)
     name = serializers.CharField(validators=[validators_unique_product_name])
+    user_name = serializers.CharField(source="user.username", read_only=True)
     class Meta:
         model = Product
-        fields = ('email', 'url', 'pk', 'name', 'content', 'price', 'my_discount')
+        fields = ('user_name', 'email', 'url', 'pk', 'name', 'content', 'price', 'my_discount')
 
     def validate_name(self, value):
         request = self.context.get('request')
         qs = Product.objects.filter(name__iexact=value)
-        if request is not None:
-            user = request.user 
-            qs = Product.objects.filter(user=user, name__iexact=value)
         if qs.exists():
            raise serializers.ValidationError(f"Le produit {value} existe deja en db")
         return value        
