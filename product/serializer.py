@@ -1,24 +1,30 @@
 from rest_framework import  serializers
 from rest_framework.reverse import reverse
+
+from api.serializer import UserPublicSerializer
 from .models import Product
 
 from .validators import validators_unique_product_name
 
+class UserProductInlineSerializer(serializers.Serializer):
+    url = serializers.HyperlinkedIdentityField(view_name='product-detail', lookup_field='pk')
+    email = serializers.EmailField(write_only=True)
+    name = serializers.CharField()
+
 class ProductSerializer(serializers.ModelSerializer):
     my_discount = serializers.SerializerMethodField(read_only=True)
+    owner = UserProductInlineSerializer(source='user.product_set.all', many=True, read_only=True)
     url = serializers.HyperlinkedIdentityField(view_name='product-detail', lookup_field='pk')
     email = serializers.EmailField(write_only=True)
     name = serializers.CharField(validators=[validators_unique_product_name])
+   
     class Meta:
         model = Product
-        fields = ('email', 'url', 'pk', 'name', 'content', 'price', 'my_discount')
+        fields = ('owner', 'email', 'url', 'pk', 'name', 'content', 'price', 'my_discount')
 
     def validate_name(self, value):
         request = self.context.get('request')
         qs = Product.objects.filter(name__iexact=value)
-        if request is not None:
-            user = request.user 
-            qs = Product.objects.filter(user=user, name__iexact=value)
         if qs.exists():
            raise serializers.ValidationError(f"Le produit {value} existe deja en db")
         return value        

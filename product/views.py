@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from .serializer import ProductSerializer
 from rest_framework import  generics, mixins
 
-from api.mixins import StaffEditorPermissionsMixin
+from api.mixins import StaffEditorPermissionsMixin, UserQuerrySetMixin
 
 class DetailProductView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
@@ -24,10 +24,13 @@ class ListCreateProductView(
         content = serializer.validated_data.get('content') or None
         if content is None:
             content = name
-        serializer.save(content=content)
+        serializer.save(content=content, user=self.request.user)
+
+      
 
 class UpdateProductView(
     StaffEditorPermissionsMixin, 
+    UserQuerrySetMixin,
     generics.UpdateAPIView):  
 
     queryset = Product.objects.all()
@@ -42,6 +45,7 @@ class UpdateProductView(
 
 class DeleteProductView(
     StaffEditorPermissionsMixin, 
+    UserQuerrySetMixin,
     generics.DestroyAPIView):
     
     queryset = Product.objects.all()
