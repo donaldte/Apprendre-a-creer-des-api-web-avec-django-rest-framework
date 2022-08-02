@@ -14,12 +14,13 @@ class UserProductInlineSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     my_discount = serializers.SerializerMethodField(read_only=True)
     url = serializers.HyperlinkedIdentityField(view_name='product-detail', lookup_field='pk')
-    email = serializers.EmailField(write_only=True)
+    #email = serializers.EmailField(write_only=True)
     name = serializers.CharField(validators=[validators_unique_product_name])
+    owner = serializers.CharField(read_only=True, source='user')
    
     class Meta:
         model = Product
-        fields = ('email', 'url', 'pk', 'name', 'content', 'price', 'my_discount')
+        fields = ('owner', 'url', 'pk', 'name', 'content', 'price', 'my_discount', 'public')
 
     def validate_name(self, value):
         request = self.context.get('request')
