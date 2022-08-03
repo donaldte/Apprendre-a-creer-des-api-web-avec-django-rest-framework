@@ -1,3 +1,6 @@
+ 
+import random
+
 from django.db import models
 from django.conf import settings
 from django.db.models import Q
@@ -29,6 +32,7 @@ class ProductManager(models.Manager):
         return self.get_queryset().is_public().search(query, user)
 
 class Product(models.Model):
+    TAGS_LIST = ['fruits', 'voitures', 'elecroniques']
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=100)
     content = models.TextField(null=True, blank=True)
@@ -37,6 +41,12 @@ class Product(models.Model):
 
     objects = ProductManager()
     
+    def is_public(self) -> bool:
+        return self.public
+
+    def get_tags_list(self):
+        return [random.choice(self.TAGS_LIST)]    
+
     @property
     def get_discount(self):
         return "%.2f"%(float(self.price) * 0.5)
