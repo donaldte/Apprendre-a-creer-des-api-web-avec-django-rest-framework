@@ -48,7 +48,15 @@ INSTALLED_APPS = [
     # third party app
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt'
 ]
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=2),
+}    
 
 # Dans une fichier .env django-dotenv
 ALGOLIA = {
@@ -59,14 +67,19 @@ ALGOLIA = {
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "product.authentication.TokenAuthentication",
+       
+        
     ],
     "DEFAULT_PERMISSION_CLASSES":[
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 10
+    "PAGE_SIZE": 5
 }
+
+
 
 
 MIDDLEWARE = [
