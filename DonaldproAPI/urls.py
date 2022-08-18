@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('product/', include('product.urls')),
+    path('api/', include('product.urls')),
     path('api/product/search/', include('search.urls')),
     path('product/v2/', include('DonaldproAPI.routers'))
 ]
