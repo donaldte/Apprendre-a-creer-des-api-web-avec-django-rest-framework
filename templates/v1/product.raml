@@ -1,0 +1,82 @@
+#%RAML 1.0
+---
+title: Ecommerce Digital Product
+baseUri: http://mon-ecom.com/api/{version}
+version: v1
+
+/product-b/:
+  description: This api helps to manage(get, post, put, path, delete) products
+  get:
+    description: Get the list of products
+    headers: 
+      Content-Type: application/json
+    queryParameters: 
+      name:
+        description: name of the product
+        type: string
+        example: orange
+    responses: 
+      200:
+        body:
+          application/json:
+            example: !include product-list.json
+
+      404:
+        body:
+          application/json:
+            example: | 
+              {
+                'detail': "empty list"
+              { 
+
+      403:
+        body:
+          application/json:
+            example: | 
+              {
+                "detail": "Authentication credentials were not provided."
+              }       
+
+
+  post:
+    description: create a new product
+    headers: 
+      Content-Type: application/json
+      Authorization: Bearer acces
+    body: 
+      application/json:     
+        properties:
+          name:
+            description: name of the product
+            type: string
+            required: true
+          content:
+            description: product description
+            type: string 
+          price:
+            description: price of the product
+            type: number
+        example: | 
+          {
+              "name":"Mandarine",
+              "content":"lkjalkdj",
+              "price":200,
+          }
+    responses: 
+      200:
+        body:
+          application/json:
+            example: |
+             {
+              ""owner": "donald",
+              "url": "http://127.0.0.1:8000/api/9/detail",
+              "pk": 9,
+              "name": "Mandarine",
+              "content": "lkjalkdj",
+              "price": "200.00",
+              "my_discount": "100.00",
+              "public": false
+             }
+          
+              
+                            

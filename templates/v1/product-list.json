@@ -1,0 +1,57 @@
+{
+    "count": 25,
+    "next": "http://127.0.0.1:8000/api/v1/product-b/?limit=5&offset=5",
+    "previous": null,
+    "results": [
+        {
+            "owner": "donald",
+            "url": "http://127.0.0.1:8000/api/2/detail",
+            "pk": 2,
+            "name": "Avocat",
+            "content": "description here",
+            "price": "3.99",
+            "my_discount": "2.00",
+            "public": true
+        },
+        {
+            "owner": "donald",
+            "url": "http://127.0.0.1:8000/api/3/detail",
+            "pk": 3,
+            "name": "Mandarin",
+            "content": "description here",
+            "price": "3.99",
+            "my_discount": "2.00",
+            "public": true
+        },
+        {
+            "owner": "donald",
+            "url": "http://127.0.0.1:8000/api/4/detail",
+            "pk": 4,
+            "name": "Pasteque",
+            "content": "just pasteque",
+            "price": "20.00",
+            "my_discount": "10.00",
+            "public": true
+        },
+        {
+            "owner": "donald",
+            "url": "http://127.0.0.1:8000/api/5/detail",
+            "pk": 5,
+            "name": "Orange",
+            "content": "Orange",
+            "price": "200.00",
+            "my_discount": "100.00",
+            "public": true
+        },
+        {
+            "owner": "donald",
+            "url": "http://127.0.0.1:8000/api/6/detail",
+            "pk": 6,
+            "name": "Pasteque",
+            "content": "just pasteque",
+            "price": "20.00",
+            "my_discount": "10.00",
+            "public": true
+        }
+    ]
+}
