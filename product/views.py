@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from .models import Product
 
 from django.forms.models import model_to_dict
@@ -106,4 +106,6 @@ class ProductMixinsView(
         return self.partial_update(request, *args, **kwargs)             
 
         
-        
+
+def documentation(request):
+    return render(request, 'v1/product.html')        

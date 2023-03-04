@@ -22,4 +22,8 @@ class ProductListRestrieveViewset(
     ):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+#RAML -------> RESTful API Modeling language 
+
+ 
     

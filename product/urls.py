@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import DetailProductView, ListCreateProductView, ListProductView, ProductMixinsView, UpdateProductView, DeleteProductView
+from .views import DetailProductView, ListCreateProductView, ListProductView, ProductMixinsView, UpdateProductView, DeleteProductView, documentation
 
 urlpatterns = [
    # path('<int:pk>/', DetailProductView.as_view()),
@@ -14,5 +14,6 @@ urlpatterns = [
    # path('<int:pk>/update', ProductMixinsView.as_view()),
    path('<int:pk>/delete', ProductMixinsView.as_view()),
    path('list/', ProductMixinsView.as_view()),
+   path('documentation', documentation, name='documentation')
      
 ]

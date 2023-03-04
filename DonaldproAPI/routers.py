@@ -4,6 +4,6 @@ from  product.viewset import ProductViewset, ProductListRestrieveViewset
 
 router = DefaultRouter()
 
-router.register('product-b', ProductViewset, basename='product-a')
+router.register('product-b', ProductViewset, basename='product-b')
 
 urlpatterns = router.urls
