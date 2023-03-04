@@ -37,21 +37,50 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party api services
+    'algoliasearch_django',
+
+    # our app 
     'product',
+    'search',
     'api',
+
+    # third party app
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt'
 ]
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=2),
+}    
+
+# Dans une fichier .env django-dotenv
+ALGOLIA = {
+    'APPLICATION_ID': 'GD8OUBRSDE',
+    'API_KEY': '6ebe6ab8d0905c0ea74040a1960e84c4'
+}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "product.authentication.TokenAuthentication",
+       
+        
     ],
     "DEFAULT_PERMISSION_CLASSES":[
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-    ]
+    ],
+    "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 5
 }
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

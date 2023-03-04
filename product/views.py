@@ -14,13 +14,11 @@ class DetailProductView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
 class ListCreateProductView(
-    StaffEditorPermissionsMixin,
-    UserQuerrySetMixin, 
+    StaffEditorPermissionsMixin, 
     generics.ListCreateAPIView):
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    user_field = 'user'
     def perform_create(self, serializer):
         name = serializer.validated_data.get('name')
         content = serializer.validated_data.get('content') or None
